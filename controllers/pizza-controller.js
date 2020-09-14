@@ -4,6 +4,12 @@ const pizzaController = {
   // get all pizzas
   getAllPizza(req, res) {
     Pizza.find({}) // Same as 'findAll()' method in Sequelize
+      .populate({
+        path: 'comments',
+        select: '-__v' // The minus sign - in front of the field indicates that we don't want it to be returned.
+      })
+      .select('-__v')
+      .sort({ _id: -1 })
       .then(dbPizzaData => res.json(dbPizzaData))
       .catch(err => {
         console.log(err);
@@ -14,6 +20,11 @@ const pizzaController = {
   // get one pizza by id
   getPizzaById({ params }, res) {
     Pizza.findOne({ _id: params.id })
+      .populate({
+        path: 'comments',
+        select: '-__v'
+      })
+      .select('-__v')
       .then(dbPizzaData => {
         // If no pizza is found, send 404
         if (!dbPizzaData) {

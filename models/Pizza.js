@@ -13,10 +13,29 @@ const PizzaSchema = new Schema({ // create a schema, using the Schema constructo
     default: Date.now
   },
   size: {
-    type: String, 
+    type: String,
     default: 'Large'
   },
-  toppings: [] // Could also specify 'Array' in place of the brackets here.
+  toppings: [], // Could also specify 'Array' in place of the brackets here.
+
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment' // Instructs the Pizza model which documents to search in order to find the right comments.
+    }
+  ]
+},
+  {
+    toJSON: {
+      virtuals: true,
+    },
+    id: false
+  }
+);
+
+// get total count of comments and replies on retrieval
+PizzaSchema.virtual('commentCount').get(function () {
+  return this.comments.length;
 });
 
 
