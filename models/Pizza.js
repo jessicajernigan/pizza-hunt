@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const moment = require('moment');
 
 
 const PizzaSchema = new Schema({ // create a schema, using the Schema constructor imported from Mongoose
@@ -10,7 +11,8 @@ const PizzaSchema = new Schema({ // create a schema, using the Schema constructo
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    get: (createdAtVal) => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
   },
   size: {
     type: String,
@@ -28,6 +30,7 @@ const PizzaSchema = new Schema({ // create a schema, using the Schema constructo
   {
     toJSON: {
       virtuals: true,
+      getters: true
     },
     id: false
   }
