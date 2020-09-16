@@ -4,10 +4,14 @@ const moment = require('moment');
 
 const PizzaSchema = new Schema({ // create a schema, using the Schema constructor imported from Mongoose
   pizzaName: {
-    type: String // It is not necessary to define the fields, but it's useful practice for clarity and usability.
+    type: String, // It is not necessary to define the fields, but it's useful practice for clarity and usability.
+    required: true,
+    trim: true
   },
   createdBy: {
-    type: String
+    type: String,
+    required: true,
+    trim: true
   },
   createdAt: {
     type: Date,
@@ -16,6 +20,8 @@ const PizzaSchema = new Schema({ // create a schema, using the Schema constructo
   },
   size: {
     type: String,
+    required: true,
+    enum: ['Personal', 'Small', 'Medium', 'Large', 'Extra Large'], // enumerable, a popular term in web development that refers to a set of data that can be iterated over—much like using the for...in loop to iterate through an object.
     default: 'Large'
   },
   toppings: [], // Could also specify 'Array' in place of the brackets here.
